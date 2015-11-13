@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>demo</title>
+	<meta name="keywords" content=""/>
+	<meta name="description" content=""/>
+	<meta name="viewport" content="width=device-width"/>
+	<style type="text/css">
+		.fn-scale{
+			display: inline-block;
+			overflow:  hidden;
+			width: 250px;
+			height: 52px;
+		}
+		.fn-scale img{
+			transform: scale(1);
+			transition: transform .5s ease;
+		}
+		.fn-scale:hover img{
+			transform: scale(1.05);
+		}
+
+
+		.fn-animate-border{
+			display: inline-block;
+			position: relative;
+			width: 250px;
+			height: 52px;
+		}
+		.fn-animate-border:after,
+		.fn-animate-border:before{
+			content: "";
+			position: absolute;
+			top:0;
+			bottom:0;
+			left:0;
+			right:0;
+			transition: transform .5s ease;
+		}
+		.fn-animate-border:after{
+			border-top: 2px solid #f60;
+			border-bottom: 2px solid #f60;
+			transform: scale(0, 1);
+		}
+		.fn-animate-border:before{
+			border-left: 2px solid #f60;
+			border-right: 2px solid #f60;
+			transform: scale(1, 0);
+		}
+		.fn-animate-border:hover:after,
+		.fn-animate-border:hover:before{
+			transform: scale(1);
+		}
+		
+		.nav{
+			width: 50px;
+			height: 200px;
+			background-color: #000;
+		}
+		.nav{
+			position: fixed;
+			left: 50%;
+			margin-left: 100px;
+			bottom: 60px;
+			visibility: hidden;
+			opacity: 1;
+			transition: all .5s ease;
+		}
+		.nav-top{
+			visibility: hidden;
+			transform: scale(0);
+		}
+		.nav-show{
+			visibility: visible;
+			transform: scale(1);
+		}
+		.nav-show-bottom{
+			bottom: 0;
+			opacity: 0;
+		}
+	</style>
+</head>
+<body>
+	<h2>效果一：图片hover放大</h2>
+	<a class="fn-scale" href="javascript:;">
+		<img class="" src="../images/logo_kaola.png">
+	</a>
+	<hr>
+	<h2>效果二： 动画边框</h2>
+	<a class="fn-animate-border" href="javascript:;">
+		<img class="" src="../images/logo_kaola.png">
+	</a>
+	<hr>
+	<h2>效果二： 右侧导航栏上到下滚动放大弹出效果(配置js 实现) </h2>
+	<nav id="J_nav" class="nav nav-top"></nav>
+	<hr>
+	<div style="height: 1500px;"></div>
+	<script>
+		var nav = document.getElementById("J_nav");
+		var body = document.getElementsByTagName("body")[0];
+		var bodyScrollTop;
+		body.onscroll = (function(){
+
+			var setTime;
+			return function(){
+				if(setTime){
+					return;
+				}
+				setTime = setTimeout(function(){
+					bodyScrollTop = body.scrollTop;
+					if(bodyScrollTop < 50){
+						nav.className = "nav nav-top";
+					}else if(bodyScrollTop >= 50 && bodyScrollTop < 500){
+						nav.className = "nav nav-top nav-show";
+					}else if(bodyScrollTop >= 800){
+						nav.className = "nav nav-show-bottom";
+					}
+					clearTimeout(setTime);
+					setTime = null;
+				}, 300);
+			};
+		})();
+	</script>
+</body>
+</html
