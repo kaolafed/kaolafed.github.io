@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+#contentMain{
+    margin-bottom:50px;
+}
+.Item {
+    width: 150px;
+    height: 150px;
+    margin-top: 100px;
+    margin-left: 300px;
+    position: absolute;
+}
+.Item2 {
+    margin-left: 500px;
+    position: absolute;
+}
+.Item>img {
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    border: 3px solid #fff;
+    -webkit-box-shadow: 1px 0px 15px #ccc;
+    -moz-box-shadow: 1px 0px 15px #ccc;
+    box-shadow: 1px 0px 15px #ccc;
+    transition-duration: .5s;
+}
+.Item>img:nth-child(1) {
+    -webkit-transform: rotate(10deg);
+    -moz-transform: rotate(10deg);
+    transform: rotate(10deg);
+}
+.Item>img:nth-child(2) {
+    -webkit-transform: rotate(-10deg);
+    -moz-transform: rotate(-10deg);
+    transform: rotate(-10deg);
+}
+.Item:hover img:nth-child(2) {
+    margin-left: -150px;
+    -webkit-transform: rotate(-370deg);
+    -moz-transform: rotate(350deg);
+    transform: rotate(350deg);
+}
+.Item:hover img:nth-child(1) {
+    -webkit-transform: rotate(370deg);
+    -moz-transform: rotate(370deg);
+    transform: rotate(370deg);
+    margin-left: 150px;
+}
+@-webkit-keyframes btnRotate {
+0% {
+    -webkit-transform: rotateZ(0deg);
+    }
+100% {
+    -webkit-transform: rotateZ(360deg);
+    }
+}
+#startMenu button img {
+    -webkit-animation: btnRotate 1.5s linear infinite;
+}
+@-webkit-keyframes circle {
+100% {
+    -webkit-transform: rotate(360deg)
+    }
+}
+#circle{margin-left:50%;margin-top:400px;}
+#circle img{
+    border-radius: 50%;
+    -webkit-animation: circle 3s linear infinite;
+    transform-origin:-20px 0;
+}
+@-webkit-keyframes swing {
+100% {
+    -webkit-transform: rotate(-30deg)
+    }
+}
+#rec{
+    height:60px;width:20px;    
+    -webkit-animation: swing 1.5s linear infinite alternate;
+    transform-origin:top;
+    margin: 400px;
+    -webkit-transform:rotate(30deg)
+}
+#move{
+    height:300px;
+    background: #f1f1f1;
+    overflow:hidden;
+}
+@-webkit-keyframes move{
+    0%{
+        transform:translate(200px,-100px);
+    }
+    100%{
+        transform: translate(600px, 100px);
+    }
+}
+#move img{
+    -webkit-animation: move 3s linear infinite;
+}
+    </style>
+</head>
+<body>
+    <div class="Item">
+        <img src="http://dummyimage.com/800x600/4d494d/686a82.gif&text=placeholder+image" alt="placeholder+image">
+        <img src="http://dummyimage.com/800x600/4d494d/686a82.gif&text=placeholder+image" alt="placeholder+image">
+        <img src="http://dummyimage.com/800x600/4d494d/686a82.gif&text=placeholder+image" alt="placeholder+image">
+    </div>
+    <div id="startMenu">
+        <button>
+            <img src="http://dummyimage.com/20x20/4d494d/686a82.gif&text=placeholder+image">
+        </button>
+    </div>
+
+    <div id="circle">
+            <img src="http://dummyimage.com/20x20/4d494d/686a82.gif&text=placeholder+image">
+    </div>
+
+    <div id="rec">
+            <img src="http://dummyimage.com/20x60/4d494d/686a82.gif&text=placeholder+image">
+    </div>
+
+    <div id="move">
+        <img src="http://dummyimage.com/20x20/4d494d/686a82.gif&text=placeholder+image">
+    </div>
+</body>
+</html>
