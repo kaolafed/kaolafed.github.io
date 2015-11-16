@@ -79,6 +79,10 @@ define(['base/klass'
                             x: x,
                             y: y
                      };
+                     datas.coordinate = {
+                            x:x,
+                            y:y
+                     }
               }
               pro.__swipe = function(e){
                      // if(this.datas.isEnd==true)
