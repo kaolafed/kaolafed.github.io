@@ -6,6 +6,9 @@ define(['base/klass'
        function  (k,ut,v,e,_t0,p) {
               p._$$swipeModule = k._$klass();
               pro = p._$$swipeModule._$extend(_t0._$$EventTarget);
+              /**
+               * 初始化函数
+               */
               pro.__init = function  (opt) {
                      this.__initData(opt);
                      this.__showStage();
@@ -13,6 +16,9 @@ define(['base/klass'
                      this.__initEvent();
                      this.__super(opt);
               }
+              /**
+               * 初始化数据
+               */
               pro.__initData = function(opt) {
                      this.elements = {};
                      this.datas = {};
@@ -21,22 +27,19 @@ define(['base/klass'
                      this.elements.swipe = e._$get('swipe');
                      this.elements.ctx  = this.elements.swipe.getContext('2d');
                      this.datas.scaleValue = Math.round(this._$getScale());
-                     this.datas.coordinate = {
-                            x: -1,
-                            y: -1
-                     }
-                     this.datas.firstTouch = {
-                            x:-1,
-                            y:-1
-                     }
-
-                     // this.datas.isEnd = false;
-                     this.datas.overline = opt.overline;
-                     this.datas.callback = opt.callback;
+                     this.datas.coordinate = {x: -1, y: -1};
+                     this._$extend(this.datas.coordinate,this.datas.firstTouch);
+                     this._$extend(opt,this.datas);
               }
+              /**
+               * 展示舞台
+               */
               pro.__showStage = function () {
                      e._$setStyle(this.elements.swipeWrap,'display','block');
               }
+              /**
+               * 初始化舞台
+               */
               pro.__initStage = function  () {
                      var elements = this.elements;
                      var datas = this.datas;
@@ -50,6 +53,9 @@ define(['base/klass'
                      swipe.height = datas.winH;
                      this.__setBackground(ctx,datas,'#ccc');
               }
+              /**
+               * 加上触摸事件
+               */
               pro.__initEvent = function () {
                      var elements = this.elements;
                      var datas = this.datas;
@@ -64,9 +70,10 @@ define(['base/klass'
                      swipe.addEventListener('touchmove',fns.move,false);
                      swipe.addEventListener('touchend',fns.end,false);
               }
+              /**
+               * 开始触屏
+               */
               pro.__swipeOn = function(e){
-                     // if(this.datas.isEnd==true)
-                            // return;
 
                      var datas = this.datas;
                      var touchs = e.changedTouches;
@@ -75,18 +82,13 @@ define(['base/klass'
                      var y = (touch.pageY-swipe.offsetTop) * datas.scaleValue;
 
                      e.preventDefault();
-                     datas.firstTouch = {
-                            x: x,
-                            y: y
-                     };
-                     datas.coordinate = {
-                            x:x,
-                            y:y
-                     }
+                     datas.firstTouch = {x: x,y: y};
+                     this._$extend(datas.firstTouch,datas.coordinate);
               }
+              /**
+               * 移动手指
+               */
               pro.__swipe = function(e){
-                     // if(this.datas.isEnd==true)
-                            // return;
 
                      var elements = this.elements;
                      var datas = this.datas;
@@ -113,7 +115,7 @@ define(['base/klass'
                                           datas.coordinate.y,
                                           x,
                                           y);
-                                   this.__drawBounds.call(this,collections)
+                                   this.__drawBounds.call(this,collections);
                             }
                             ctx.beginPath();
                             ctx.arc(x, y, 10*datas.scaleValue, 0, Math.PI * 2);
@@ -124,9 +126,10 @@ define(['base/klass'
                             }
                      }._$bind(this));
               }
+              /**
+               * 结束划屏
+               */
               pro.__touchout = function(e){
-                     // if(this.datas.isEnd==true)
-                            // return;
 
                      var datas = this.datas;
                      var fns = this.fns;
@@ -144,32 +147,23 @@ define(['base/klass'
                             swipe.removeEventListener('touchmove',fns.move);
                             swipe.removeEventListener('touchend',fns.end);
                             datas.callback();
-                            // this.datas.isEnd=true;
                      }
               }
-              pro.__setBackground = function(ctx,datas,color){
-                     ctx.fillStyle = color;
-                     ctx.fillRect(0,0,datas.winW,datas.winH);
-              }
-              pro._$getScale = function () {
-                     return window.devicePixelRatio;
-              }
+              /**
+               * 计算边界
+               * @param  {int} x1 [点1x坐标]
+               * @param  {int} y1 [点1y坐标]
+               * @param  {int} x2 [点2x坐标]
+               * @param  {int} y2 [点2y坐标]
+               * @return {array}    4个点的x,y坐标
+               */
               pro.__computeBoundPoints = function(x1,y1,x2,y2){
                      var a = Math.abs(x2-x1);
                      var b = Math.abs(y2-y1);
                      var c = Math.sqrt(Math.pow(a,2)+Math.pow(b,2));
                      var a1,b1,c1;
                      var m={},n={}, o={}, p={};
-                     var key;
-                     var yCollection = [y1,y2];
-                     var xCollection = [x1,x2];
-                     var maxXindex = xCollection.indexOf(Math.max.apply(null,xCollection));
-                     var maxYindex = yCollection.indexOf(Math.max.apply(null,yCollection));
-
-                     if(maxXindex == maxYindex)
-                            key=1;
-                     else
-                            key=-1;
+                     var key = this._$isEval(this._$maxIndex([y1,y2]),this._$maxIndex([x1,x2]))?1:-1
                      
                      c1 = 10*this.datas.scaleValue;
 
@@ -195,14 +189,22 @@ define(['base/klass'
                      console.log('-------------------------------');
                      return [m,n,p,o];
               }
+              /**
+               * 划边界
+               */
               pro.__drawBounds = function(arr){
                      var ctx = this.elements.ctx;
                      ctx.moveTo(arr[0].x, arr[0].y);//将画笔移到x0,y0处
                      ctx.lineTo(arr[1].x, arr[1].y);//从x0,y0到x1,y1画一条线
                      ctx.lineTo(arr[2].x, arr[2].y);//从x1,y1到x2,y2画条线
                      ctx.lineTo(arr[3].x, arr[3].y);//从x1,y1到x2,y2画条线
+                     ctx.moveTo(arr[0].x, arr[0].y);//从x1,y1到x2,y2画条线
                      ctx.fill();//填充
               }
+              /**
+               * 输出当前覆盖面积
+               * @return {int} [0~100 表示当前覆盖面积]
+               */
               pro.getTransparentPercent = function(){
                      var elements = this.elements;
                      var datas = this.datas;
@@ -221,5 +223,51 @@ define(['base/klass'
                      }
                      return (transPixs.length / (pixles.length / 4) * 100).toFixed(2);
               }
+              /**
+               * 设置背景色
+               */
+              pro.__setBackground = function(ctx,datas,color){
+                     ctx.fillStyle = color;
+                     ctx.fillRect(0,0,datas.winW,datas.winH);
+              }
+              /**
+               * 获取设备dpr
+               * @return {int} [dpr]
+               */
+              pro._$getScale = function () {
+                     return window.devicePixelRatio;
+              }
+              /**
+               * 获取数据中的最大值得index
+               * @param  {array} array 
+               * @return {int}       [角标]
+               */
+              pro._$maxIndex = function(array){
+                     return array.indexOf(Math.max.apply(null,array));
+              }
+              /**
+               * 判断是否相等
+               * @param  {int} val1 [description]
+               * @param  {int} val2 [description]
+               * @return {boolean}      [description]
+               */
+              pro._$isEval = function(val1,val2){
+                     return val1 == val2;
+              }
+              /**
+               * 扩展
+               * @description source=>target
+               */
+              pro._$extend = function(source,target){
+                     if(!target)
+                            target = {};
+
+                     for(var attr in source){
+                            if(!target.hasOwnProperty(attr)){
+                                   target[attr] = source[attr];
+                            }
+                     }
+              }
+              
               return p;
        });
