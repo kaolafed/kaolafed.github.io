@@ -7,15 +7,17 @@ define(['base/klass'
        function  (k,ut,v,e,_,_t0,p) {
               p._$$swipeModule = k._$klass();
               pro = p._$$swipeModule._$extend(_t0._$$EventTarget);
-              pro.__init = function  () {
-                     this.__initData();
+              pro.__init = function  (opt) {
+                     this.__initData(opt);
                      this.__showStage();
                      this.__initStage();
                      this.__initEvent();
+                     this.__super(opt);
               }
-              pro.__initData = function() {
-                     this.elements = [];
-                     this.datas = [];
+              pro.__initData = function(opt) {
+                     this.elements = {};
+                     this.datas = {};
+                     this.fns = {};
                      this.elements.swipeWrap = e._$getByClassName(document,'u-swipe-wrap')[0];
                      this.elements.swipe = e._$get('swipe');
                      this.elements.ctx  = this.elements.swipe.getContext('2d');
@@ -28,7 +30,10 @@ define(['base/klass'
                             x:-1,
                             y:-1
                      }
-                     this.datas.isEnd = false;
+
+                     // this.datas.isEnd = false;
+                     this.datas.overline = opt.overline;
+                     this.datas.callback = opt.callback;
               }
               pro.__showStage = function () {
                      e._$setStyle(this.elements.swipeWrap,'display','block');
@@ -51,14 +56,18 @@ define(['base/klass'
                      var datas = this.datas;
                      var swipe = elements.swipe;
                      var ctx = elements.ctx;
+                     var fns = this.fns;
+                     fns.start = this.__swipeOn._$bind(this);
+                     fns.move = this.__swipe._$bind(this);
+                     fns.end = this.__touchout._$bind(this);
 
-                     swipe.addEventListener('touchstart',this.__swipeOn._$bind(this),false);
-                     swipe.addEventListener('touchmove',this.__swipe._$bind(this),false);
-                     swipe.addEventListener('touchend',this.__touchout._$bind(this),false);
+                     swipe.addEventListener('touchstart',fns.start,false);
+                     swipe.addEventListener('touchmove',fns.move,false);
+                     swipe.addEventListener('touchend',fns.end,false);
               }
               pro.__swipeOn = function(e){
-                     if(this.datas.isEnd==true)
-                            return;
+                     // if(this.datas.isEnd==true)
+                            // return;
 
                      var datas = this.datas;
                      var touchs = e.changedTouches;
@@ -73,8 +82,8 @@ define(['base/klass'
                      };
               }
               pro.__swipe = function(e){
-                     if(this.datas.isEnd==true)
-                            return;
+                     // if(this.datas.isEnd==true)
+                            // return;
 
                      var elements = this.elements;
                      var datas = this.datas;
@@ -113,10 +122,11 @@ define(['base/klass'
                      }._$bind(this));
               }
               pro.__touchout = function(e){
-                     if(this.datas.isEnd==true)
-                            return;
+                     // if(this.datas.isEnd==true)
+                            // return;
 
                      var datas = this.datas;
+                     var fns = this.fns;
                      var elements = this.elements;
                      var swipe = elements.swipe;
                      var ctx = elements.ctx;
@@ -125,9 +135,13 @@ define(['base/klass'
                             x:-1,
                             y:-1
                      }
-                     if(this.getTransparentPercent()>30){
+                     if(this.getTransparentPercent()>datas.overline){
                             ctx.clearRect(0,0,datas.winW,datas.winH);
-                            this.datas.isEnd=true;
+                            swipe.removeEventListener('touchstart',fns.start);
+                            swipe.removeEventListener('touchmove',fns.move);
+                            swipe.removeEventListener('touchend',fns.end);
+                            datas.callback();
+                            // this.datas.isEnd=true;
                      }
               }
               pro.__setBackground = function(ctx,datas,color){

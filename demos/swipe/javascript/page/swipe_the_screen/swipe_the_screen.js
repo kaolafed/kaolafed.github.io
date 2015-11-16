@@ -37,6 +37,10 @@ define(['base/klass'
 		}
 		pro.__initCanvas = function () {
 			swipeMdl._$$swipeModule._$allocate({
+				overline:50,
+				callback:function(){
+					alert('已刮完');
+				}
 			});
 		}
 		 p._$$swipe._$allocate();
