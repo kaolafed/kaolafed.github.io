@@ -9,13 +9,10 @@ define(['base/klass'
        ,'base/event'
        ,'base/element'
        ,'util/event'
-       ,'pro/widget/request'
-       ,'pro/extend/util'
-       ,'{lib}util/cache/cookie.js'
        ,'./swipe.js'
       //  ,'./dialog/dialog.js'
       ],
-        function(k,ut,v,e,_t0,request,util,j,swipeMdl,
+        function(k,ut,v,e,_t0,swipeMdl,
         	// dialog
         	p) { 
 		/**

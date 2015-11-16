@@ -2,9 +2,8 @@ define(['base/klass'
        ,'base/util'
        ,'base/event'
        ,'base/element'
-       ,'pro/extend/util'
        ,'util/event'],
-       function  (k,ut,v,e,_,_t0,p) {
+       function  (k,ut,v,e,_t0,p) {
               p._$$swipeModule = k._$klass();
               pro = p._$$swipeModule._$extend(_t0._$$EventTarget);
               pro.__init = function  (opt) {
