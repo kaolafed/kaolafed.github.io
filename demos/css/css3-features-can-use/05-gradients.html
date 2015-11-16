@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8"/>
+		<title>Awesome CSS3 Features You Can Finally Use</title>
+
+		<link href="assets/css/style.css" rel="stylesheet" />
+
+		<style>
+			.container{
+				text-align:center;
+				padding:20px 0;
+				width:450px;
+				margin: 0 auto;
+			}
+
+			.container div{
+				width:100px;
+				height:100px;
+				display:inline-block;
+				margin:2px;
+
+				box-shadow: 0 0 1px rgba(0, 0, 0, 0.5) inset, 0 1px 1px #DDD;
+				border-radius:2px;
+
+				color:#666;
+				vertical-align: top;
+				line-height: 230px;
+				font-size: 12px;
+			}
+
+			#el1{
+				background:linear-gradient(to bottom, #8dd2d9 , #58c0c7);
+			}
+
+			#el2{
+				background:radial-gradient(#77d19e,#46c17b);
+			}
+
+			#el3{
+				background:repeating-linear-gradient(-45deg, #de9dd4, #de9dd4 5px, white 5px, white 10px);
+			}
+
+			#el4{
+				background:repeating-radial-gradient(#b8e7bf, #b8e7bf 5px, white 5px, white 10px);
+			}
+		</style>
+
+	</head>
+
+	<body>
+
+		<h1>Gradients</h1>
+
+		<div class="container">
+			<div id="el1">Linear</div>
+			<div id="el2">Radial</div>
+			<div id="el3">Repeating Lin.</div>
+			<div id="el4">Repeating Rad.</div>
+		</div>
+
+		<footer>
+            <a href="http://tutorialzine.com/2013/10/12-awesome-css3-features-you-can-finally-use/">Awesome CSS3 Features You Can Finally Use</a>
+        </footer>
+
+	</body>
+</html>

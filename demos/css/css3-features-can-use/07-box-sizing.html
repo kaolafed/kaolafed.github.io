@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8"/>
+		<title>Awesome CSS3 Features You Can Finally Use</title>
+
+		<link href="assets/css/style.css" rel="stylesheet" />
+
+		<style>
+			.container{
+				text-align:center;
+			}
+
+			.container div{
+
+				/* Setting the box-sizing method: */
+				box-sizing:border-box;
+
+				/* Firefox still requires the -moz prefix */
+				-moz-box-sizing:border-box;
+
+				width:120px;
+				height:120px;
+				display:inline-block;
+				vertical-align:top;
+			}
+
+			/* Thanks to box-sizing, we can set whatever padding and border
+			   we want, and the elements will still keep the same size */
+
+			#el1{
+				color:#524480;
+				background-color:#B2A4E0;
+			}
+
+			#el2{
+				padding:8px;
+				border:10px solid #9ec551;
+				background-color:#fff;
+			}
+
+			#el3{
+				padding:32px;
+				background-color:#ccc;
+			}
+		</style>
+
+	</head>
+
+	<body>
+
+		<h1>Box Sizing</h1>
+
+		<div class="container">
+			<div id="el1">Element 1</div>
+			<div id="el2">Element 2</div>
+			<div id="el3">Element 3</div>
+		</div>
+
+		<footer>
+            <a href="http://tutorialzine.com/2013/10/12-awesome-css3-features-you-can-finally-use/">Awesome CSS3 Features You Can Finally Use</a>
+        </footer>
+
+	</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8"/>
+		<title>Awesome CSS3 Features You Can Finally Use</title>
+
+		<link href="assets/css/style.css" rel="stylesheet" />
+
+		<!-- This line is important - it makes the width of the page equal the reported width of the device -->
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+		<style>
+
+			/* Style the main content and the sidebar */
+
+			.container{
+				width:900px;
+				margin: 0 auto;
+				overflow:hidden;
+			}
+
+			.main-section{
+				background-color:#CDEBC4;
+				color:#6D8B64;
+				width:520px;
+				float:left;
+				height:500px;
+			}
+
+			.sidebar{
+				background-color:#ccc;
+				width:350px;
+				float:right;
+				height:400px;
+			}
+
+			.container p{
+				padding-top:100px;
+				text-align:center;
+			}
+
+			.note{
+				text-align:center;
+				padding-top:60px;
+				font-style:italic;
+			}
+
+
+			/* This simple media query makes the column layout
+			   linear on smaller screens */
+
+			@media (max-width:900px){
+
+				.container{
+					width:100%;
+				}
+
+				.main-section, .sidebar{
+					width:auto;
+					margin-bottom:20px;
+					float:none;
+				}
+
+			}
+
+		</style>
+
+	</head>
+
+	<body>
+
+		<h1>Media Queries</h1>
+
+		<div class="container">
+
+			<aside class="sidebar"><p>This is the sidebar<p></aside>
+
+			<div class="main-section">
+				<p>The main content of the article goes here</p>
+			</div>
+
+		</div>
+
+		<p class="note">Resize the page to see the media query in action</p>
+
+		<footer>
+            <a href="http://tutorialzine.com/2013/10/12-awesome-css3-features-you-can-finally-use/">Awesome CSS3 Features You Can Finally Use</a>
+        </footer>
+
+	</body>
+</html>

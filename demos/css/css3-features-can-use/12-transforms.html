@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8"/>
+		<title>Awesome CSS3 Features You Can Finally Use</title>
+
+		<!-- The Stylesheets -->
+		<link href="assets/css/style.css" rel="stylesheet" />
+
+		<style>
+			.container{
+
+				/* How pronounced should the 3D effects be */
+				perspective: 800px;
+				-webkit-perspective: 800px;
+
+				background: radial-gradient(#e0e0e0, #aaa);
+				width:480px;
+				height:480px;
+				margin:0 auto;
+				border-radius:6px;
+				position:relative;
+			}
+
+			.iphone-front,
+			.iphone-back{
+
+				/* Enable 3D transforms */
+				transform-style: preserve-3d;
+				-webkit-transform-style: preserve-3d;
+
+				/* We are using two separate divs for the front and back of the
+				   phone. This will hide the divs when they are flipped, so that the
+				   opposite side can be seen:  */
+
+				backface-visibility: hidden;
+				-webkit-backface-visibility: hidden;
+
+				width:200px;
+				height:333px;
+
+				position:absolute;
+				top:50%;
+				left:50%;
+				margin:-166px 0 0 -100px;
+
+				background:url(assets/img/iphone.png) no-repeat left center;
+
+				/* Animate the transitions */
+				transition:0.8s;
+			}
+
+			.iphone-back{
+
+				/* The back side is flipped 180 deg by default */
+				transform:rotateY(180deg);
+				-webkit-transform:rotateY(180deg);
+
+				background-position:right center;
+			}
+
+			.container:hover .iphone-front{
+				/* When the container is hovered, flip the front side and hide it .. */
+				transform:rotateY(180deg);
+				-webkit-transform:rotateY(180deg);
+			}
+
+			.container:hover .iphone-back{
+				/* .. at the same time flip the back side into visibility */
+				transform:rotateY(360deg);
+				-webkit-transform:rotateY(360deg);
+			}
+		</style>
+
+	</head>
+
+	<body>
+
+		<h1>CSS 3D Transforms</h1>
+
+		<div class="container">
+			<div class="iphone-front"></div>
+			<div class="iphone-back"></div>
+		</div>
+
+		<footer>
+            <a href="http://tutorialzine.com/2013/10/12-awesome-css3-features-you-can-finally-use/">Awesome CSS3 Features You Can Finally Use</a>
+        </footer>
+
+	</body>
+</html>
