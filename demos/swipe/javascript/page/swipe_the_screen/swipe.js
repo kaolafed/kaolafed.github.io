@@ -89,7 +89,6 @@ define(['base/klass'
                * 移动手指
                */
               pro.__swipe = function(e){
-
                      var elements = this.elements;
                      var datas = this.datas;
                      var swipe = elements.swipe;
@@ -115,6 +114,7 @@ define(['base/klass'
                                           datas.coordinate.y,
                                           x,
                                           y);
+                                   this.__log(JSON.stringify(collections));
                                    this.__drawBounds.call(this,collections);
                             }
                             ctx.beginPath();
@@ -263,11 +263,13 @@ define(['base/klass'
                             target = {};
 
                      for(var attr in source){
-                            if(!target.hasOwnProperty(attr)){
+                            if(source.hasOwnProperty(attr)){
                                    target[attr] = source[attr];
                             }
                      }
               }
-              
+              pro.__log = function(msg){
+                     e._$get('log').innerHTML = msg;
+              }
               return p;
        });
