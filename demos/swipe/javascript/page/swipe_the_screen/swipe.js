@@ -26,7 +26,7 @@ define(['base/klass'
                      this.elements.ctx  = this.elements.swipe.getContext('2d');
                      this.datas.scaleValue = Math.round(this._$getScale());
                      this.datas.coordinate = {x: -1, y: -1};
-                     this.datas.swipe_bg = "/img/guajiang_bg.png";
+                     this.datas.swipe_bg = "img/guajiang_bg.png";
                      this.datas.swipe_offset = {
                       top:this.__getOffset(this.elements.swipe,0),
                       left:this.__getOffset(this.elements.swipe,1)

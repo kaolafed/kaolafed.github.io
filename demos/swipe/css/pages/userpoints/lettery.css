@@ -33,7 +33,7 @@
 .swipe_kuang {
 			width: 330px;
 			height: 170px;
-			background-image: url(/img/guajiangkuang.png);
+			background-image: url(../../..//img/guajiangkuang.png);
 			background-size: 100% 100%;
 			margin: 10px auto;
 			padding: 10px 15px;
@@ -50,7 +50,7 @@
 			z-index: 1;
 		}
 		a.swipe_btn{
-			background:url(/img/swipe_btn_bg.png); 
+			background:url(../../..//img/swipe_btn_bg.png); 
 			background-size: 100% 100%;
 			display: inline-block;;
 			width: 130px;
@@ -81,10 +81,10 @@
 			/*display: none;*/
 		}
 		.swipe_result.failed{
-			background-image: url(/img/swipe_failed.png);
+			background-image: url(../../../img/swipe_failed.png);
 		}
 		.swipe_result.success{
-			background-image: url(/img/swipe_success.png);
+			background-image: url(../../../img/swipe_success.png);
 		}
 		.swipe_result_btngroup{
 			opacity: 0;
