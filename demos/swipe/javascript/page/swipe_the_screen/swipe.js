@@ -11,9 +11,7 @@ define(['base/klass'
                */
               pro.__init = function  (opt) {
                      this.__initData(opt);
-                     this.__showStage();
                      this.__initStage();
-                     this.__initEvent();
                      this.__super(opt);
               }
               /**
@@ -23,19 +21,19 @@ define(['base/klass'
                      this.elements = {};
                      this.datas = {};
                      this.fns = {};
-                     this.elements.swipeWrap = e._$getByClassName(document,'u-swipe-wrap')[0];
+                     this.elements.swipeWrap = e._$getByClassName(document,'swipe_wrap')[0];
                      this.elements.swipe = e._$get('swipe');
                      this.elements.ctx  = this.elements.swipe.getContext('2d');
                      this.datas.scaleValue = Math.round(this._$getScale());
                      this.datas.coordinate = {x: -1, y: -1};
+                     this.datas.swipe_bg = "/img/guajiang_bg.png";
+                     this.datas.swipe_offset = {
+                      top:this.__getOffset(this.elements.swipe,0),
+                      left:this.__getOffset(this.elements.swipe,1)
+                     }
+                     this.datas.line_width = 10;
                      this._$extend(this.datas.coordinate,this.datas.firstTouch);
                      this._$extend(opt,this.datas);
-              }
-              /**
-               * 展示舞台
-               */
-              pro.__showStage = function () {
-                     e._$setStyle(this.elements.swipeWrap,'display','block');
               }
               /**
                * 初始化舞台
@@ -46,17 +44,17 @@ define(['base/klass'
                      var swipe = elements.swipe;
                      var ctx = elements.ctx;
                      datas.winW = 300 * datas.scaleValue;
-                     datas.winH = 200 * datas.scaleValue;
+                     datas.winH = 150 * datas.scaleValue;
                      datas.centerX = datas.winW/2;
                      datas.centerY = datas.winH/2;
                      swipe.width = datas.winW;
                      swipe.height = datas.winH;
-                     this.__setBackground(ctx,datas,'#ccc');
+                     this.__setBackground(ctx,datas);
               }
               /**
                * 加上触摸事件
                */
-              pro.__initEvent = function () {
+              pro._$initEvent = function () {
                      var elements = this.elements;
                      var datas = this.datas;
                      var swipe = elements.swipe;
@@ -75,19 +73,27 @@ define(['base/klass'
                */
               pro.__swipeOn = function(e){
 
-                     var datas = this.datas;
-                     var touchs = e.changedTouches;
-                     var touch = touchs[touchs.length-1]
-                     var x = (touch.pageX-swipe.offsetLeft) * datas.scaleValue;
-                     var y = (touch.pageY-swipe.offsetTop) * datas.scaleValue;
+                    var datas = this.datas;
+                    var touchs = e.changedTouches;
+                    var touch = touchs[touchs.length-1];
+                    var touch_location = this.__getTouchLocation(touch);
 
-                     e.preventDefault();
-                     datas.firstTouch = {x: x,y: y};
-                     this._$extend(datas.firstTouch,datas.coordinate);
+                    e.preventDefault();
+                    datas.firstTouch = touch_location;
+                    this._$extend(datas.firstTouch,datas.coordinate);
               }
               /**
                * 移动手指
                */
+              pro.__getTouchLocation = function(touch){
+                  var datas = this.datas;
+                  var x = (touch.pageX-datas.swipe_offset.left) * datas.scaleValue;
+                  var y = (touch.pageY-datas.swipe_offset.top) * datas.scaleValue;
+                  return {
+                    x:x,
+                    y:y
+                  }
+              }
               pro.__swipe = function(e){
                      var elements = this.elements;
                      var datas = this.datas;
@@ -98,11 +104,14 @@ define(['base/klass'
                      e.preventDefault();
                      ctx.globalCompositeOperation = 'destination-out';   
                      Array.prototype.forEach.call(touchs,function(touch){
-                            var x = (touch.pageX-swipe.offsetLeft) * datas.scaleValue;
-                            var y = (touch.pageY-swipe.offsetTop) * datas.scaleValue;
+                            var touch_location = this.__getTouchLocation(touch);
+                            var x = touch_location.x;
+                            var y = touch_location.y;
+
                             if(datas.firstTouch.x!=-1&&datas.firstTouch.y!=-1){
                                    ctx.beginPath();
-                                   ctx.arc(datas.firstTouch.x, datas.firstTouch.y, 10*datas.scaleValue, 0, Math.PI * 2);
+                                   ctx.fillStyle="#ccc";
+                                   ctx.arc(datas.firstTouch.x, datas.firstTouch.y, datas.line_width*datas.scaleValue, 0, Math.PI * 2);
                                    ctx.fill();
                                    datas.firstTouch={
                                           x:-1,
@@ -118,7 +127,7 @@ define(['base/klass'
                                    this.__drawBounds.call(this,collections);
                             }
                             ctx.beginPath();
-                            ctx.arc(x, y, 10*datas.scaleValue, 0, Math.PI * 2);
+                            ctx.arc(x, y, datas.line_width*datas.scaleValue, 0, Math.PI * 2);
                             ctx.fill();
                             datas.coordinate = {
                                    x:x,
@@ -130,7 +139,6 @@ define(['base/klass'
                * 结束划屏
                */
               pro.__touchout = function(e){
-
                      var datas = this.datas;
                      var fns = this.fns;
                      var elements = this.elements;
@@ -146,8 +154,28 @@ define(['base/klass'
                             swipe.removeEventListener('touchstart',fns.start);
                             swipe.removeEventListener('touchmove',fns.move);
                             swipe.removeEventListener('touchend',fns.end);
+                            this.__clearSwipe();
                             datas.callback();
                      }
+              }
+              pro.__isElemOn = function(elem){
+                return !!document.getElementById(elem.id)
+              } 
+              pro.__againGame = function(){
+                  var elements = this.elements;
+                  var swipe = elements.swipe;
+                  if(!this.__isElemOn(swipe)){
+                    this.elements.swipeWrap.appendChild(swipe);
+                  }
+                  this.__initStage();
+                  this._$initEvent();
+              }
+              pro.__clearSwipe = function(){
+                var elements = this.elements;
+                var swipe=elements.swipe;
+                if(swipe){
+                  swipe.parentNode.removeChild(swipe);
+                }
               }
               /**
                * 计算边界
@@ -158,6 +186,7 @@ define(['base/klass'
                * @return {array}    4个点的x,y坐标
                */
               pro.__computeBoundPoints = function(x1,y1,x2,y2){
+                    var datas = this.datas;
                      var a = Math.abs(x2-x1);
                      var b = Math.abs(y2-y1);
                      var c = Math.sqrt(Math.pow(a,2)+Math.pow(b,2));
@@ -165,7 +194,7 @@ define(['base/klass'
                      var m={},n={}, o={}, p={};
                      var key = this._$isEval(this._$maxIndex([y1,y2]),this._$maxIndex([x1,x2]))?1:-1
                      
-                     c1 = 10*this.datas.scaleValue;
+                     c1 = datas.line_width*this.datas.scaleValue;
 
                      a1 = a/c*c1;
                      b1 = b/c*c1;
@@ -227,8 +256,13 @@ define(['base/klass'
                * 设置背景色
                */
               pro.__setBackground = function(ctx,datas,color){
-                     ctx.fillStyle = color;
-                     ctx.fillRect(0,0,datas.winW,datas.winH);
+                     var img = new Image();
+                     var canvas = this.elements.swipe;
+                     img.src = this.datas.swipe_bg;
+                     img.onload = function(){
+                        ctx.drawImage(img,0,0,datas.winW,datas.winH);
+                     }
+                     //(0,0,datas.winW,datas.winH);
               }
               /**
                * 获取设备dpr
@@ -270,6 +304,25 @@ define(['base/klass'
               }
               pro.__log = function(msg){
                      e._$get('log').innerHTML = msg;
+              }
+              pro.__getOffset = function(elem,code){
+                var attr ;
+                var value  = 0 ;
+                if(code==0){
+                  attr = "offsetTop";
+                }else{
+                  attr = "offsetLeft";
+                }
+                return getOffset();
+                function getOffset(){
+                  var v = elem[attr];
+                  if(elem.offsetParent){
+                    elem = elem.offsetParent;
+                    value=value+ v;
+                    return getOffset();
+                  }
+                  return value;
+                }
               }
               return p;
        });

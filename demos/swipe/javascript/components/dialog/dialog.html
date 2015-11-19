@@ -1,0 +1,16 @@
+<div class="m-dialog {{custClass}}" on-touchmove={{this.preventMove($event)}} ref=dialog>
+	{{#if !!confirm}}
+	<div class="confirm {{_aniClass}}">
+		<div class="txt {{confirm.textClass||''}}">{{confirm.text}}</div>
+		<div class="btns {{confirm.btns.length===1?'btns-1':'btns-2'}}">
+			{{#list confirm.btns as btn}}
+			<span class="btn" on-click={{this.btnClick(btn.action, $event)}}>{{btn.text}}</span>
+			{{/list}}
+		</div>
+	</div>
+	{{#else}}
+	<div class="content  {{_aniClass}}">
+		{{#include content}}
+	</div>
+	{{/if}}
+</div>

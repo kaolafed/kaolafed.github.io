@@ -1,0 +1,47 @@
+<section class="m-mask" r-hide={{hideMask}} on-click="{{hideMask=true}}" on-touchmove="{{this.onMaskTouchMove($event)}}"></section>
+<section class="m-ruledetail" r-hide={{hideMask}} on-touchmove="{{this.onRuleTouchMove($event)}}">
+  <div class="title">活动规则</div>
+  <span class="closeBtn" on-click="{{hideMask=true}}"></span>
+  <div class="contentWrap" ref="contentWrap">
+  <div class="content">
+    <p>活动时间：</p>
+    <div>11月4日10:00—11月9日10:00</div>
+    <p class="rewards">揭榜时间：</p>
+    <div>11月10日16:00</div>
+    <p class="rewards">活动规则</p>
+    <ul>
+      <li><b>1.&nbsp;</b>上传照片成功，送5元无门槛优惠券；</li>
+      <li><b>2.&nbsp;</b>助威数满10个，送20元优惠券(满199元使用)；</li>
+      <li><b>3.&nbsp;</b>助威数满30个，送200元优惠券大礼包（499-50限直邮，500-100限箱包，399-50限保健）；</li>
+      <!-- <li><b>人气奖：</b>助威数最多的前10名人气宝宝送价值1000元的考拉福袋；</li>
+      <li><b>幸运奖：</b>抽取20名，获得200元的考拉福袋；</li> -->
+      <!-- <dl>
+        <dd><b>一等奖1名：</b>获得全年尿不湿(24包)；</dd>
+        <dd><b>二等奖3名：</b>获得半年尿不湿(12包)；</dd>
+        <dd><b>三等奖6名：</b>获得4包尿不湿。</dd>
+      </dl> -->
+    </ul>
+    <!-- <p class="prize">实物奖品说明</p>
+    <ul>
+      <li><b>人气奖：</b>助威数最多的前10名设计师宝宝送价值1000元的考拉福袋；</li>
+      <li><b>幸运奖：</b>抽取20名，获得200元的考拉福袋；</li>
+    </ul> -->
+    <p class="rewards">福袋奖品说明</p>
+    <div>活动结束后：助威数最多的前五名，获得1000元的考拉福袋；助威数最多的第六到十名，获得500元考拉福袋。</div>
+    <p class="rewards">晒什么送什么奖品说明</p>
+    <div>小考拉将从所有参与者选出5名脑洞最大的最佳创意炫富，获得网易考拉创意大富翁称号，奖品为所晒物品！（创意炫富奖品举例：你画一个手表出来，小考拉送你一个真实的手表！）<br><b>温馨提示：晒什么送什么奖品总价值上限为5000元；</b></div>
+    <p class="intro">活动说明</p>
+    <ul>
+      <li><b>1.&nbsp;</b>为了保证图片质量，上传的照片如果不符合要求，将会被清除；</li>
+      <li><b>2.&nbsp;</b>要求图片内容为用户实拍，若更换照片，之前积累助威数将被清零；</li>
+      <li><b>3.&nbsp;</b>优惠券由系统自动派发到您的账户，请在“我的考拉”—“我的优惠券”里面查看；</li>
+      <li><b>4.&nbsp;</b>优惠券不可与其他优惠券叠加使用；</li>
+      <li><b>5.&nbsp;</b>优惠券有效期：2015年11月11日00:00:00-2015年11月13日23:59:59，逾期作废；</li>
+      <li><b>6.&nbsp;</b>通过任何不正当行为的刷票，考拉有权直接取消所有奖品；</li>
+      <li><b>7.&nbsp;</b>活动结束后，考拉会对用户助威数进行统计并揭晓中奖名单，并在5个工作日内联系获奖用户寄送奖品；</li>
+      <li><b>8.&nbsp;</b>福袋奖品包括零食，个护，海外直邮商品等，具体以实物为准；</li>
+      <li><b>9.&nbsp;</b>活动最终解释权归网易考拉海购所有。</li>
+    </ul>
+  </div>
+  </div>
+</section>
